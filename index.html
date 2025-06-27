@@ -1,0 +1,33 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+<style>
+    .exams{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        list-style: none;
+    }
+</style>
+<body>
+<div class="exams  max-w-[1200px] mx-auto p-4 grid grid-cols-3 gap-4" ></div>
+<form id="form" class="grid grid-cols-3 gap-4  p-4   max-w-[1200px] mx-auto" >
+    <div class="flex items-center gap-2 w-full">
+        <input class="bg-yellow-200 w-full rounded-md p-4 " id="name" type="text" placeholder="NAME">
+
+    </div>
+
+    <button id="submit" type="submit" class="bg-green-500 rounded-md   w-full p-4 hover:text-blue-900">submit</button>
+</form>
+<script src="main.js"></script>
+</body>
+</html>
