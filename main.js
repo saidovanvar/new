@@ -2,7 +2,7 @@ let form = document.querySelector('#form');
 let name = document.querySelector('#name');
 let exams = document.querySelector(".exams");
 
-
+let isEditing = false;
 
 async function dataFetch() {
     let response = await fetch(`https://crm-test-api.duckdns.org/api/Sections`, {
@@ -23,7 +23,8 @@ function fetchSections(sections) {
         sectionDiv.innerHTML = `
         <div class=" bg-[#9C9C9C] rounded-md px-[20px] py-[20px] mb-2">
          <p class="text-[#fff] font-bold">${section.name}</p>
-            <button onclick="deleteSection(${section.id})" class="bg-red-400 hover:bg-red-600 text-white px-4 py-2 mt-2 rounded"> O‘chirish</button>
+            <button onclick="deleteAction(${section.id})" class="bg-red-400 hover:bg-red-600 text-white px-4 py-2 mt-2 rounded">🗑️Delete</button>
+            <button data-id="${section.id}" class="btn-edit bg-yellow-400 w-[100px] px-3 py-2 mt-2 rounded hover:bg-yellow-500">✏️Edit</button>
         </div>
            
         `;
@@ -80,14 +81,35 @@ form.addEventListener("submit", async (e) => {
     });
 
     if (response.ok) {
-        alert("malumot  qo‘shildi");
+        alert("name kritildi");
         dataFetch();
     } else {
-        alert("Xatolik yuz berdi");
+        alert("error");
     }
 });
 
-async function deleteSection(id) {
+let editBtn = document.querySelectorAll(".btn-edit");
+editBtn.forEach(editId => {
+    editId.addEventListener("click", async (e) => {
+        let id = e.target.getAttribute("data-id");
+        await editAction(id);
+    });
+})
+
+async function editAction(id) {
+    let res = await fetch(`https://crm-test-api.duckdns.org/api/Sections/${id}/`, {
+        method: "POST",
+        headers: {
+            "content-type": "application/json",
+            "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyIiwibmFtZSI6ImFzaWxiZWsiLCJ1bmlxdWVfbmFtZSI6Iis5OTg5MTQ1NDIzMzkiLCJqdGkiOiIzMjJjM2Y4Yi1mMTMxLTRkNmUtYmE2Zi1iZTlkMTY4MDQ2MmUiLCJUZW5hbnRJZCI6IjEiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbiIsImV4cCI6MTc1NjkxNTc5NCwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo1MDAwIn0.EYljRkOlh94fuprfOFInoSv51vhKtviP1icgZqik7Dw"
+        },
+    })
+    let data = await res.json();
+
+    console.log(data);
+}
+
+async function deleteAction(id) {
 
 
     let response = await fetch(`https://crm-test-api.duckdns.org/api/Sections/${id}`, {
